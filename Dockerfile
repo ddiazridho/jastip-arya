@@ -51,7 +51,7 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 # Install compose json n lock dulu, agar tidak perlu install ulang di iterasi kedua 
 COPY composer.json composer.lock ./
 
-# codeload git error
+# codeload git error di production
 RUN apk add --no-cache git
 
 RUN composer install \
@@ -65,6 +65,12 @@ COPY . .
 
 # copy fe build dari workdir stage 1
 COPY --from=frontend /app/public/build ./public/build
+
+# error di production
+RUN mkdir -p bootstrap/cache storage/logs \
+    && chown -R www-data:www-data bootstrap/cache storage \
+    && chmod -R 775 bootstrap/cache storage
+USER www-data
 
 # Port FPM
 EXPOSE 9000
