@@ -22,8 +22,6 @@ services:
     # Build image yang ada di dockerfile
     build: .
     container_name: jastip_app
-    volumes:
-      - .:/var/www/html
     # working dir
     working_dir: /var/www/html
     # menunggu db up
