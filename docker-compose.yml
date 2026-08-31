@@ -1,0 +1,52 @@
+services:
+  # services name
+  db:
+    image: mysql:8.4
+    container_name: mysql_db
+    # port tidak ada, db hanya diizinkan berkomunikasi dengan services di dalam container 
+    env_file:
+      - .env
+    # tempat menyimpan data di path host
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE : ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD : ${DB_PASSWORD}
+    # docker networks, untuk network antar container
+    networks:
+      - app-network
+
+  app:
+    # Build image yang ada di dockerfile
+    build: .
+    container_name: jastip_app
+    volumes:
+      - .:/var/www/html
+    # working dir
+    working_dir: /var/www/html
+    # menunggu db up
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  webserver:
+    image: nginx:alpine
+    container_name: nginx_web_server
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - app
+    networks:
+      - app-network
+
+volumes:
+  mysql_data:
+
+networks:
+  app-network:
+    driver: bridge
