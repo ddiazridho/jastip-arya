@@ -1,4 +1,16 @@
+# STAGE 1 NODE IMAGE (hanya build)
+FROM node:22-alpine AS frontend
 
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci
+
+COPY . .
+RUN npm run build
+
+
+# STAGE 2 PHP IMAGE
 # Base image
 FROM php:8.4-fpm-alpine
 
@@ -47,6 +59,8 @@ RUN composer install \
     --no-scripts
 
 COPY . .
+# copy dari workdir stage 1
+COPY --from=frontend /app/public/build ./public/build
 
 # Port FPM
 EXPOSE 9000
