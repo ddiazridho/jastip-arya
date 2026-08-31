@@ -67,9 +67,12 @@ COPY . .
 COPY --from=frontend /app/public/build ./public/build
 
 # error di production
-RUN mkdir -p bootstrap/cache storage/logs \
-    && chown -R www-data:www-data bootstrap/cache storage \
-    && chmod -R 775 bootstrap/cache storage
+RUN mkdir -p \
+    storage/framework/cache \
+    storage/framework/sessions \
+    storage/framework/views \
+    bootstrap/cache \
+    && chown -R www-data:www-data storage bootstrap/cache
 USER www-data
 
 # Port FPM
