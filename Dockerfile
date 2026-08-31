@@ -51,15 +51,19 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 # Install compose json n lock dulu, agar tidak perlu install ulang di iterasi kedua 
 COPY composer.json composer.lock ./
 
+# codeload git error
+RUN apk add --no-cache git
+
 RUN composer install \
     --no-interaction \
-    --prefer-dist \
+    --prefer-source \
     --no-dev \
     --optimize-autoloader \
     --no-scripts
 
 COPY . .
-# copy dari workdir stage 1
+
+# copy fe build dari workdir stage 1
 COPY --from=frontend /app/public/build ./public/build
 
 # Port FPM
