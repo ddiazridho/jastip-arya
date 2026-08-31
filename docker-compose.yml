@@ -7,6 +7,7 @@ services:
     env_file:
       - .env
     # tempat menyimpan data di path host
+    # di host : di container
     volumes:
       - mysql_data:/var/lib/mysql
     restart: unless-stopped
