@@ -53,7 +53,6 @@
 
     {{-- Script untuk mengosongkan keranjang di localStorage setelah checkout berhasil --}}
     <script type="module">
-        import Cart from '{{ Vite::asset('resources/js/cart.js') }}';
         
         // Hapus semua data keranjang belanja
         Cart.clear();

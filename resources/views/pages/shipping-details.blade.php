@@ -40,7 +40,6 @@
     </main>
 
     <script type="module">
-        import Cart from '{{ Vite::asset('resources/js/cart.js') }}';
 
         const cartItems = Cart.getItems();
         const cartItemsContainer = document.getElementById('shipping-cart-items');
