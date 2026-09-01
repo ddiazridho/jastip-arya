@@ -43,7 +43,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./certbot/conf:/etc/letsencrypt
+      - /etc/letsencrypt:/etc/letsencrypt
       - app_public:/var/www/html/public:ro
       # langsung mengakses /public/storage agar tidak perlu php artisan storage:link
       - app_storage:/var/www/html/public/storage:ro
