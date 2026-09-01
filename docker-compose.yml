@@ -7,7 +7,7 @@ services:
     env_file:
       - .env
     # tempat menyimpan data di path host atau bind mount. untuk data persisten, jika container dihapus data tidak hilang.
-    # di host : di container. 
+    # nama volume/bind mount: container path
     volumes:
       - mysql_data:/var/lib/mysql
     restart: unless-stopped
@@ -41,7 +41,9 @@ services:
     container_name: nginx_web_server
     ports:
       - "80:80"
+      - "443:443"
     volumes:
+      - ./certbot/conf:/etc/letsencrypt
       - app_public:/var/www/html/public:ro
       # langsung mengakses /public/storage agar tidak perlu php artisan storage:link
       - app_storage:/var/www/html/public/storage:ro
