@@ -9,10 +9,10 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->words(3, true),
-            'description' => fake()->sentence(),
+            'name' => $this->faker->name(),
+            'description' => $this->faker->sentence(),
             'price' => 500000.00,
-            'image_url' => "products\hRxaC1aNJ78aMU1Xg0MeqsapE12VDBqtDhAHbnvk.png",
+            'image_url' => "products\Pv5fOPUUMlIYnFHuD12kuMZO9nHuX8L7h0ARMio9.jpg",
         ];
     }
 }
