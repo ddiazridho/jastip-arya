@@ -6,8 +6,8 @@ services:
     # port tidak ada, db hanya diizinkan berkomunikasi dengan services di dalam container 
     env_file:
       - .env
-    # tempat menyimpan data di path host
-    # di host : di container
+    # tempat menyimpan data di path host atau bind mount
+    # di host : di container. 
     volumes:
       - mysql_data:/var/lib/mysql
     restart: unless-stopped
@@ -26,6 +26,9 @@ services:
       - .env
     # working dir
     working_dir: /var/www/html
+    # expose 'public' agar dapat diakses oleh webserver
+    volumes:
+      - app_public:/var/www/html/public
     # menunggu db up
     depends_on:
       - db
@@ -38,7 +41,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - .:/var/www/html
+      - app_public:/var/www/html/public:ro
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
     depends_on:
       - app
@@ -47,6 +50,7 @@ services:
 
 volumes:
   mysql_data:
+  app_public:
 
 networks:
   app-network:
