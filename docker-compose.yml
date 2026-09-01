@@ -6,7 +6,7 @@ services:
     # port tidak ada, db hanya diizinkan berkomunikasi dengan services di dalam container 
     env_file:
       - .env
-    # tempat menyimpan data di path host atau bind mount
+    # tempat menyimpan data di path host atau bind mount. untuk data persisten, jika container dihapus data tidak hilang.
     # di host : di container. 
     volumes:
       - mysql_data:/var/lib/mysql

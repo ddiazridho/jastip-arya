@@ -19,8 +19,6 @@
     </div>
 
     <script type="module">
-        import Cart from '{{ Vite::asset('resources/js/cart.js') }}';
-
         function formatIdr(n) {
             return 'Rp ' + n.toLocaleString('id-ID');
         }

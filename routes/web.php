@@ -44,7 +44,6 @@ Route::middleware('auth:admin')->group(function (){
 });
 
 
-
 Route::get('/keranjang', function() {
     return view('pages.keranjang');
 }) -> name('keranjang');
